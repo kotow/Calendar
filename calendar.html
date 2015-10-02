@@ -1,0 +1,103 @@
+
+<html>
+<head>
+    <style>
+        /* calendar */
+        table.calendar		{ border-left:1px solid #999; }
+        tr.calendar-row	{  }
+        td.calendar-day	{ min-height:80px; font-size:11px; position:relative; } * html div.calendar-day { height:80px; }
+        td.calendar-day:hover	{ background:#eceff5; }
+        td.calendar-day-np	{ background:#eee; min-height:80px; } * html div.calendar-day-np { height:80px; }
+        td.calendar-day-head { background:#ccc; font-weight:bold; text-align:center; width:120px; padding:5px; border-bottom:1px solid #999; border-top:1px solid #999; border-right:1px solid #999; }
+        div.day-number {
+            background: #FFFFFF;
+            /* padding: 5px; */
+            color: #EFEFEF;
+            /* font-weight: bold; */
+            /* float: right; */
+            /* margin: -5px -5px 0 0; */
+            /* width: 20px; */
+            /* text-align: center; */
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            font-size: 30px;
+            text-align: center;
+            vertical-align: middle;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        /* shared */
+        td.calendar-day, td.calendar-day-np { width:120px; padding:5px; border-bottom:1px solid #999; border-right:1px solid #999; }
+    </style>
+</head>
+<body>
+<div>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <div>
+        <h2>September 2015</h2><table cellpadding="0" cellspacing="0" class="calendar"><tr class="calendar-row"><td class="calendar-day-head">Monday</td><td class="calendar-day-head">Tuesday</td><td class="calendar-day-head">Wednesday</td><td class="calendar-day-head">Thursday</td><td class="calendar-day-head">Friday</td><td class="calendar-day-head">Saturday</td><td class="calendar-day-head">Sunday</td></tr><tr class="calendar-row"><td class="calendar-day-np"> </td><td class="calendar-day"><div class="day-number">1</div>victor<br>karamfil<br>mehmed<br><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">2</div>victor<br>karamfil<br>mehmed<br><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">3</div>victor<br>karamfil<br>mehmed<br><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">4</div>victor<br>2 | test task 3<br>karamfil<br>mehmed<br><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">5</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">6</div><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day"><div class="day-number">7</div>victor<br>karamfil<br>mehmed<br><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">8</div>victor<br>3 | test task 3<br>karamfil<br>mehmed<br><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">9</div>victor<br>karamfil<br>mehmed<br><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">10</div>victor<br>karamfil<br>mehmed<br><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">11</div>victor<br>karamfil<br>mehmed<br><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">12</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">13</div><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day"><div class="day-number">14</div>victor<br>karamfil<br>mehmed<br><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">15</div>victor<br>karamfil<br>mehmed<br><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">16</div>victor<br>karamfil<br>mehmed<br><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">17</div>victor<br>karamfil<br>mehmed<br><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">18</div>victor<br>karamfil<br>mehmed<br><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">19</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">20</div><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day"><div class="day-number">21</div>victor<br>karamfil<br>mehmed<br><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">22</div>victor<br>karamfil<br>mehmed<br><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">23</div>victor<br>karamfil<br>mehmed<br><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">24</div>victor<br>karamfil<br>mehmed<br><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">25</div>victor<br>karamfil<br>mehmed<br><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">26</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">27</div><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day"><div class="day-number">28</div>victor<br>karamfil<br>mehmed<br><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">29</div>victor<br>karamfil<br>mehmed<br><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">30</div>victor<br>karamfil<br>mehmed<br><p> </p><p> </p></td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td></tr></table>
+        <a href="/calendar/8">Prev</a>
+        <a href="/calendar/10">Next</a>
+    </div>
+
+    <div>
+        <form method="post" action="/calendar">
+            <select name="user" required>
+                <option value="" disabled selected>Select user</option>
+                <option value="1">victor</option>
+                <option value="2">karamfil</option>
+                <option value="3">mehmed</option>
+            </select>
+
+            <select id="project" name="project" required>
+                <option value="" disabled selected>Select project</option>
+                <option value="2">test project</option>
+                <option value="3">asd</option>
+                <option value="4">Project</option>
+                <option value="5">Project</option>
+                <option value="6">Project</option>
+                <option value="7">asd</option>
+                <option value="8">asd</option>
+                <option value="9">123</option>
+                <option value="10">asd</option>
+                <option value="11">' DROP DATABASE dealmarket</option>
+                <option value="12">Robert'); DROP TABLE STUDENTS; --</option>
+                <option value="13">Robert'); DROP TABLE tasks; --</option>
+            </select>
+
+            <select id="task" name="task" required>
+                <option value="" disabled selected>Select task</option>
+            </select>
+            <input type="number" name="hours" placeholder="hours" required>
+            <input type="text" id="datepicker" name="date" placeholder="date" required>
+            <input type="submit">
+        </form>
+    </div>
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script>
+        $(function() {
+            var date = new Date();
+            date.setMonth(09 - 1 );
+            $('#mydate').datepicker({defaultDate: date});
+            $( "#datepicker" ).datepicker({ firstDay: 1, defaultDate: date });
+            $('#project').change(function(){
+                $.get("http://localhost:8000/api/dropdown",
+                        { option: $(this).val() },
+                        function(data) {
+                            var model = $('#task');
+                            model.empty();
+                            model.append('<option value="" disabled selected>Select task</option>');
+                            $.each(data, function(index, element) {
+                                model.append("<option value='"+ element.id +"'>" + element.name + "</option>");
+                            });
+                        });
+            });
+        });
+
+    </script>
+</div>
+
+</body>
+</html>

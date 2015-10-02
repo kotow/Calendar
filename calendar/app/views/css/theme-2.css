@@ -1,0 +1,31 @@
+.clr-1{
+    background: #c6e8e8;
+}
+.clr-2{
+    background: #5de8e8;
+}
+.clr-3{
+    background: #1dbeb4;
+}
+.clr-4{
+    background: #008f96;
+}
+.clr-5{
+    background: #015e56;
+}
+
+.loader.ldr-clr-1 .loader-spiner{
+    border-color: #c6e8e8;
+}
+.loader.ldr-clr-2 .loader-spiner{
+    border-color: #5de8e8;
+}
+.loader.ldr-clr-3 .loader-spiner{
+    border-color: #1dbeb4;
+}
+.loader.ldr-clr-4 .loader-spiner{
+    border-color: #008f96;
+}
+.loader.ldr-clr-5 .loader-spiner{
+    border-color: #015e56;
+}
