@@ -22,7 +22,7 @@ class CalendarController extends \BaseController
 	public function index()
 	{
 		$calendar = $this->draw_calendar(date_format($this->date['now'], 'm'), date_format($this->date['now'], 'Y'));
-		return View::make('calendar', ['calendar' => $calendar, 'users' => $this->users, 'projects' => $this->projects, 'm' => date_format($this->date['now'], 'm'), 'name' => date_format($this->date['now'], 'M')]);
+		return View::make('calendar2', ['calendar' => $calendar, 'users' => $this->users, 'projects' => $this->projects, 'm' => date_format($this->date['now'], 'm'), 'name' => date_format($this->date['now'], 'F')]);
 	}
 
 
@@ -48,12 +48,12 @@ class CalendarController extends \BaseController
 	public function show($id)
 	{
 		$calendar = $this->draw_calendar($id, date_format($this->date['now'], 'Y'));
-		$calendar .= '<a href="/">Current</a>';
+		//$calendar .= '<a href="/">Current</a>';
         $monthNum  = $id;
         $dateObj   = DateTime::createFromFormat('!m', $monthNum);
         $monthName = $dateObj->format('F'); // March
 
-        return View::make('calendar', ['calendar' => $calendar, 'users' => $this->users, 'projects' => $this->projects, 'm' => $id, 'name' => $monthName]);
+        return View::make('calendar2', ['calendar' => $calendar, 'users' => $this->users, 'projects' => $this->projects, 'm' => $id, 'name' => $monthName]);
 	}
 
 
@@ -66,20 +66,15 @@ class CalendarController extends \BaseController
      */
 	private function draw_calendar($month, $year)
 	{
+        $week = 1;
 		if($month > 12) {
 			$year = $year + intval($month/12);
 			$month %= 12;
 		}
 		$monthNum  = $month;
 		$dateObj   = DateTime::createFromFormat('!m', $monthNum);
-		$monthName = $dateObj->format('F'); // March
-		$calendar = '<h2>' . $monthName . ' '.$year .'</h2>';
-		/* draw table */
-		$calendar = '<table cellpadding="0" cellspacing="0" class="calendar">';
-
-		/* table headings */
-		$headings = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
-		$calendar .= '<tr class="calendar-weekdays"><td class="calendar-day-np"> </td>    <td class="calendar-day-head">' . implode('</td><td class="calendar-day-head">', $headings) . '</td></tr>';
+		$calendar['month'] = trim($dateObj->format('F') . '-' . $year); // March
+		$calendar['headings'] = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
 
 		/* days and weeks vars now ... */
 		$running_day = date('N', mktime(0, 0, 0, $month, 1, $year)) - 1;
@@ -87,72 +82,23 @@ class CalendarController extends \BaseController
 		$days_in_this_week = 1;
 		$day_counter = 1;
 
-		/* row for week one */
-		$calendar .= '<tr class="calendar-row">';
-        $calendar .= '                <td class="calendar-img">
-                    <div class="small-icons">
-                        <div class="cell-row" style="height:20px;"></div>
-                        <div class="cell-row">
-                            <img  class="img-icon"  src="/images/small_icon_Victor.png">
-                        </div>
-                        <div class="cell-row ">
-                            <img  class="img-icon" src="/images/small_icon_karamfil.png">
-                        </div>
-                        <div class="cell-row ">
-                            <img  class="img-icon"  src="/images/small_icon_Mehmed.png">
-                        </div>
-                        <div class="cell-row ">
-                            <img  class="img-icon"  src="/images/small_icon_ivaylo.png">
-                        </div>
-                        <div class="cell-row">
-                            <img class="img-icon" src="/images/small_icon_Angelina.png">
-                        </div>
-                    </div>
-                </td>';
-
 		/* print "blank" days until the first of the current week */
 		for ($x = 0; $x < $running_day; $x++):
-			$calendar .= '<td class="calendar-day-np"> </td>';
-			$days_in_this_week++;
+			//$calendar .= '<td class="calendar-day-np"> </td>';
+			$calendar['weeks'][$week]['empty'] = $running_day;
+            $days_in_this_week++;
 		endfor;
 
 		/* keep going with days.... */
 		for ($list_day = 1; $list_day <= $days_in_month; $list_day++):
-			$calendar .= '<td class="calendar-day">';
-			/* add in the day number */
-			$calendar .= '<div class="day-number">' . $list_day . '</div>';
-
+            $calendar['weeks'][$week]['days'][$list_day] = $list_day;
 			if ($running_day != 5 && $running_day != 6)
-				$calendar .= $this->drawDay(new DateTime($year . '-' . $month . '-' . $day_counter));
-
-			/** QUERY THE DATABASE FOR AN ENTRY FOR THIS DAY !!  IF MATCHES FOUND, PRINT THEM !! **/
-			$calendar .= str_repeat('<p> </p>', 2);
-
-			$calendar .= '</td>';
+                $calendar['weeks'][$week]['days'][$list_day] = $this->drawDay(new DateTime($year . '-' . $month . '-' . $day_counter));
 			if ($running_day == 6):
-				$calendar .= '</tr>';
-				if (($day_counter + 1) != $days_in_month):
-					$calendar .= '<tr class="calendar-row"><td class="calendar-img">
-                    <div class="small-icons">
-                        <div class="cell-row" style="height:20px;"></div>
-                        <div class="cell-row">
-                            <img  class="img-icon"  src="/images/small_icon_Victor.png">
-                        </div>
-                        <div class="cell-row ">
-                            <img  class="img-icon" src="/images/small_icon_karamfil.png">
-                        </div>
-                        <div class="cell-row ">
-                            <img  class="img-icon"  src="/images/small_icon_Mehmed.png">
-                        </div>
-                        <div class="cell-row ">
-                            <img  class="img-icon"  src="/images/small_icon_ivaylo.png">
-                        </div>
-                        <div class="cell-row">
-                            <img class="img-icon" src="/images/small_icon_Angelina.png">
-                        </div>
-                    </div>
-                </td>';
-				endif;
+				//if (($day_counter + 1) != $days_in_month):
+                    $week++;
+                    $calendar['weeks'][$week]['empty'] = null;
+				//endif;
 				$running_day = -1;
 				$days_in_this_week = 0;
 			endif;
@@ -161,15 +107,8 @@ class CalendarController extends \BaseController
 			$day_counter++;
 		endfor;
 
-		/* finish the rest of the days in the week */
-		if ($days_in_this_week < 8):
-			for ($x = 1; $x <= (8 - $days_in_this_week); $x++):
-				$calendar .= '<td class="calendar-day-np"> </td>';
-			endfor;
-		endif;
 
-		$calendar .= '</tr></table>';
-
+//echo '<pre>';var_dump($calendar);echo '</pre>';
 		return $calendar;
 	}
 
@@ -181,20 +120,24 @@ class CalendarController extends \BaseController
      */
 	private function drawDay($day)
 	{
+        $info = array();
 		$result = '<div class="cell-container">';
 		foreach ($this->users as $user) {
-
+            $info[$user->name] = array();
 			$userTasks = DB::table('users-tasks')->join('tasks', 'users-tasks.task_id', '=', 'tasks.id')->where('date', $day)->where('user_id', $user->id)->get();
+            //echo '<pre>';var_dump($day, $userTasks);echo '</pre>';
             $result .= '<div class="cell-row hours">';
 			//$result .= $user->name . '<br>';
 			foreach ($userTasks as $task) {
+
+                $info[$user->name][$task->id] = $task->hours;
                 $result .= '<div class="hour clr-'.$user->id.' bar-'.$task->hours.'"></div>';
 				//$result .= $task->hours . ' | ' . $task->name . '<br>';
 			}
             $result .= '</div>';
 		}
         $result .= '</div>';
-		return $result;
+		return $info;
 	}
 
 }

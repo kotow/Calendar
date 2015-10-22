@@ -1,9 +1,8 @@
 @extends('layouts.default')
 @section('content')
-
     <header class="clearfix">
         <a href="/calendar/{{$m - 1}}"><span class="glyphicon glyphicon-menu-left"></span></a>
-        <h1>{{$name}} 2015</h1>
+        <h1>{{$calendar['month']}}</h1>
         <a href="/calendar/{{$m + 1}}"><span class="glyphicon glyphicon-menu-right"></span></a>
         <nav id="pageNav">
             <ul class="clearfix">
@@ -181,58 +180,101 @@
             </ul>
         </nav>
     </header>
-
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <div>
-        {{$calendar}}
+        <table cellpadding="0" cellspacing="0" class="calendar">
+            <tr class="calendar-weekdays">
+                <td class="calendar-day-np"> </td>
+            @foreach($calendar['headings'] as $weekDay)
+                    <td class="calendar-day-head">{{$weekDay}}</td>
+            @endforeach
+            </tr>
+            @foreach($calendar['weeks'] as $week)
+            <tr class="calendar-row">
+                <td class="calendar-img">
+                    <div class="small-icons">
+                        <div class="cell-row" style="height:20px;"></div>
+                        <div class="cell-row">
+                            <img  class="img-icon"  src="/images/small_icon_Victor.png">
+                        </div>
+                        <div class="cell-row ">
+                            <img  class="img-icon" src="/images/small_icon_karamfil.png">
+                        </div>
+                        <div class="cell-row ">
+                            <img  class="img-icon"  src="/images/small_icon_Mehmed.png">
+                        </div>
+                        <div class="cell-row ">
+                            <img  class="img-icon"  src="/images/small_icon_ivaylo.png">
+                        </div>
+                        <div class="cell-row">
+                            <img class="img-icon" src="/images/small_icon_Angelina.png">
+                        </div>
+                    </div>
+                </td>
+                @for($i = 0; $i < $week['empty']; $i++)
+                    <td class="calendar-day-np"> </td>
+                @endfor
+                @foreach($week['days'] as $day=>$info)
+                    <td class="calendar-day">
+                        <div class="day-number">{{$day}}</div>
+                        <div class="cell-container">
+                            @if(is_array($info))
+                        @foreach($info as $user=>$tasks)
+                                    <div class="cell-row hours">
+                                        @if(is_array($tasks))
+                                            @foreach($tasks as $task=>$hours)
+                                                <div class="hour clr-{{$task}} bar-{{$hours}}"></div>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                        @endforeach
+                                @endif
+                        </div>
+                    </td>
+                @endforeach
+            </tr>
+            @endforeach
+        </table>
     </div>
-
-    <div>
-        <form method="post" action="/calendar">
-            <select name="user" required>
-                <option value="" disabled selected>Select user</option>
-                @foreach($users as $user)
-                    <option value="{{$user->id}}">{{$user->name}}</option>
-                @endforeach
+    <div class="clearfix">
+        <div class="styled-select theme">
+            <select id="theme-picker">
+                <option value="1" selected>Dark</option>
+                <option value="2" >Light</option>
+                <option value="3" >Black And White</option>
             </select>
+        </div>
 
-            <select id="project" name="project" required>
-                <option value="" disabled selected>Select project</option>
-                @foreach($projects as $project)
-                    <option value="{{$project->id}}">{{$project->name}}</option>
-                @endforeach
-            </select>
+        <form method="post" action="/calendar" >
+            <div class="styled-select user">
+                <select  name="user" required>
+                    <option  value="" disabled selected>Select User</option>
+                    @foreach($users as $user)
+                        <option value="{{$user->id}}">{{$user->name}}</option>
+                    @endforeach
+                </select>
+            </div>
 
-            <select id="task" name="task" required>
-                <option value="" disabled selected>Select task</option>
-            </select>
-            <input type="number" name="hours" placeholder="hours" required>
-            <input type="text" id="datepicker" name="date" placeholder="date" required>
+            <div class="styled-select project">
+                <select id="project" name="project" required>
+                    <option value="" disabled selected>Select project<img</option>
+                    @foreach($projects as $project)
+                        <option value="{{$project->id}}">{{$project->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="styled-select task">
+                <select id="task" name="task" required>
+                    <option value="" disabled selected>Select task</option>
+                </select>
+            </div>
+
+            <input type="number" name="hours" placeholder="Hours" required>
+            <input type="text" id="datepicker" name="date" placeholder="Date" class="datepicker" required>
             <input type="submit">
         </form>
     </div>
-    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <script>
-        $(function() {
-            var date = new Date();
-                date.setMonth({{$m}} - 1 );
-            $('#mydate').datepicker({defaultDate: date});
-            $( "#datepicker" ).datepicker({ firstDay: 1, defaultDate: date });
-            $('#project').change(function(){
-                $.get("{{ url('api/dropdown')}}",
-                        { option: $(this).val() },
-                        function(data) {
-                            var model = $('#task');
-                            model.empty();
-                            model.append('<option value="" disabled selected>Select task</option>');
-                            $.each(data, function(index, element) {
-                                model.append("<option value='"+ element.id +"'>" + element.name + "</option>");
-                            });
-                        });
-            });
-        });
 
-    </script>
+
 
 @stop
